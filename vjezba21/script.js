@@ -164,7 +164,7 @@ Reduce metoda izvršava tzv. "reducer" callback funkciju kojoj je svrha da sve �
 u jednu vrijednost. Kako bi to lakše shvatili možemo uzeti za primjer izračun košarice proizvoda u web shopu.
 */
 
-const kosarica = [20, 40, 60, 5, 15];
+let kosarica = [20, 40, 60, 5, 15];
 
 /* Osim vrijednosti listi brojeva, moramo definirati i početnu vrijednost.
  Krećemo sa definiranjem reduce metode na način da za parametre uzima prijašnju vrijednost i vrijednost člana
@@ -184,3 +184,17 @@ console.log(suma);
 
 // kao arrow funkciju
 const suma2 = kosarica.reduce((prije, sad) => prije + sad, 0);
+
+// još jedan primjer sa kosaricom
+
+kosarica = [
+  { id: 1, proizvod: "kruh", cijena: 1.8 },
+  { id: 2, proizvod: "mlijeko", cijena: 2 },
+  { id: 3, proizvod: "salama", cijena: 9 },
+  { id: 4, proizvod: "sapun", cijena: 7 },
+  { id: 5, proizvod: "čips", cijena: 3 },
+];
+
+// Koristeći reduce metodu, izračunajte ukupni iznos košarice (zbrojite cijene)
+const suma1 = kosarica.reduce((prije, sad) => prije + sad.cijena, 0);
+console.log(suma1);
