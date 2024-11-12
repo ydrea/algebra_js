@@ -198,3 +198,53 @@ const noviAlbum = {
 album.push(noviAlbum);
 
 console.log(album);
+
+/* 
+Zadatak 6
+
+Idemo opet do Marka i Josipa i njihovog ITM-a.
+Ovaj put idemo koristiti objekte kako bi implementirali kalkulacije.
+Zapamtite ITM = masa/visina ** 2
+
+Za svakog od njih, kreiraj objekt sa vrijednostima : ime, težina, visina.
+Kreiraj calcITM metodu u svakom objektu koja će izračunati ITM (ista metoda na oba).
+
+Spremi ITM izračun u vrijednost objekta i vrati ga iz metode (return) ime
+
+logiraj u konzolu tko ima viši ITM, skupa sa imenom i ITM vrijednosti
+
+NPR: Josipov ITM (28.3) je veći od Markovog (23.9)!
+
+Test data: 
+Marko : 78 kg i 1.69 cm
+Josip : 92 kg i 1.95 cm
+*/
+
+const marko = {
+  ime: "Marko",
+  tezina: 78,
+  visina: 1.69,
+  calcITM() {
+    this.itm = this.tezina / this.visina ** 2;
+    return this.itm;
+  },
+};
+
+const josip = {
+  ime: "Josip",
+  tezina: 92,
+  visina: 1.95,
+  calcITM() {
+    this.itm = this.tezina / this.visina ** 2;
+    return this.itm;
+  },
+};
+
+marko.calcITM();
+josip.calcITM();
+
+if (marko.itm > josip.itm) {
+  console.log(`Josipov ITM (${josip.itm}) je manji od Markovog ITM-a (${marko.itm})`);
+} else {
+  console.log(`Markov ITM (${marko.itm}) je manji od Josipovog ITM-a (${josip.itm})`);
+}
