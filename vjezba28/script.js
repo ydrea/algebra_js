@@ -7,7 +7,7 @@ Kada imate checkbox unutar forme, njegovu vrijednost možete umjesto sa e.target
 e.target.checked što će dati true/false ovisno jel checkbox označen ili nije.
 */
 
-const inputForma = document.getElementById("zadatak-input");
+/* const inputForma = document.getElementById("zadatak-input");
 const naslov = document.querySelector("h1");
 
 const naInput = (e) => {
@@ -21,20 +21,39 @@ const inFocus = (e) => {
 
 const onBlur = (e) => {
   console.log("Input nije u fokusu");
-};
+}; */
 
-inputForma.addEventListener("focus", inFocus); // provjerava jesmo li kliknuli na input polje
+/* inputForma.addEventListener("focus", inFocus); // provjerava jesmo li kliknuli na input polje
 inputForma.addEventListener("blur", onBlur); // provjerava jesmo li kliknuli van input polja
-inputForma.addEventListener("input", naInput);
+inputForma.addEventListener("input", naInput); */
 
 // SUBMIT forme
 
-const forma = document.getElementById("zadatak-forma");
-const zadatak = document.getElementById("zadatak-input");
+/* const forma = document.getElementById("zadatak-forma");
+const zadatak = document.getElementById("zadatak-input"); */
 
-const onSubmit = (e) => {
+/* const onSubmit = (e) => {
   e.preventDefault(); // preventDefault metoda će spriječiti prirodni refresh stranice kada se pokrene submit forme
   console.log(zadatak.value);
 };
 
-forma.addEventListener("submit", onSubmit);
+forma.addEventListener("submit", onSubmit); */
+
+// EVENT BUBBLING
+
+const gumb = document.getElementById("gumb");
+const div = document.querySelector("form div:nth-child(2)");
+const forma = document.getElementById("zadatak-forma");
+
+gumb.addEventListener("click", (e) => {
+  alert("gumb je kliknut");
+  e.stopPropagation(); // ovu metodu dodajemo kako bi spriječili pokretanje eventListenera koji su u slojevima ispod gumba
+});
+
+div.addEventListener("click", () => {
+  alert("div je kliknut");
+});
+
+forma.addEventListener("click", () => {
+  alert("forma je kliknuta");
+});
