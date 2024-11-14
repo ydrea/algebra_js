@@ -64,6 +64,20 @@ const obrisiZadatke = () => {
   provjeriListu();
 };
 
+const filtrirajZadatke = (e) => {
+  const zadaci = listaZadataka.querySelectorAll("li");
+  const tekst = e.target.value.toLowerCase();
+
+  zadaci.forEach((zadatak) => {
+    const imeZadatka = zadatak.firstChild.textContent.toLowerCase();
+    if (imeZadatka.indexOf(tekst) != -1) {
+      zadatak.style.display = "flex";
+    } else {
+      zadatak.style.display = "none";
+    }
+  });
+};
+
 // Funkcija za provjeru ima li zadataka u našoj listi zadataka
 const provjeriListu = () => {
   const zadaci = listaZadataka.querySelectorAll("li");
@@ -80,4 +94,5 @@ const provjeriListu = () => {
 forma.addEventListener("submit", dodajZadatak);
 listaZadataka.addEventListener("click", obrisiZadatak);
 brisiSve.addEventListener("click", obrisiZadatke);
+filter.addEventListener("input", filtrirajZadatke);
 provjeriListu();
