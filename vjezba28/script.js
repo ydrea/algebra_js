@@ -7,34 +7,52 @@ Kada imate checkbox unutar forme, njegovu vrijednost možete umjesto sa e.target
 e.target.checked što će dati true/false ovisno jel checkbox označen ili nije.
 */
 
-const inputForma = document.getElementById("zadatak-input");
-const naslov = document.querySelector("h1");
+// const inputForma = document.getElementById("zadatak-input");
+// const naslov = document.querySelector("h1");
 
-const naInput = (e) => {
-  console.log(e.target.value); // e.target.value (pointer event) nam daje sve ono što je korisnik upisao u input polje
-  naslov.textContent = e.target.value; // s ovim npr. mijenjamo sadržaj h1 sa onim što je korisnik upisao u input polje
-};
+// const naInput = (e) => {
+//   console.log(e.target.value); // e.target.value (pointer event) nam daje sve ono što je korisnik upisao u input polje
+//   naslov.textContent = e.target.value; // s ovim npr. mijenjamo sadržaj h1 sa onim što je korisnik upisao u input polje
+// };
 
-const inFocus = (e) => {
-  console.log("Input je u fokusu");
-};
+// const inFocus = (e) => {
+//   console.log("Input je u fokusu");
+// };
 
-const onBlur = (e) => {
-  console.log("Input nije u fokusu");
-};
+// const onBlur = (e) => {
+//   console.log("Input nije u fokusu");
+// };
 
-inputForma.addEventListener("focus", inFocus); // provjerava jesmo li kliknuli na input polje
-inputForma.addEventListener("blur", onBlur); // provjerava jesmo li kliknuli van input polja
-inputForma.addEventListener("input", naInput);
+// inputForma.addEventListener("focus", inFocus); // provjerava jesmo li kliknuli na input polje
+// inputForma.addEventListener("blur", onBlur); // provjerava jesmo li kliknuli van input polja
+// inputForma.addEventListener("input", naInput);
 
-// SUBMIT forme
+// // SUBMIT forme
 
-const forma = document.getElementById("zadatak-forma");
-const zadatak = document.getElementById("zadatak-input");
+// const forma = document.getElementById("zadatak-forma");
+// const zadatak = document.getElementById("zadatak-input");
 
-const onSubmit = (e) => {
-  e.preventDefault(); // preventDefault metoda će spriječiti prirodni refresh stranice kada se pokrene submit forme
-  console.log(zadatak.value);
-};
+// const onSubmit = (e) => {
+//   e.preventDefault(); // preventDefault metoda će spriječiti prirodni refresh stranice kada se pokrene submit forme
+//   console.log(zadatak.value);
+// };
 
-forma.addEventListener("submit", onSubmit);
+// forma.addEventListener("submit", onSubmit);
+
+//event bubbling i capturing
+const botun = document.getElementById("botun");
+const div = document.querySelector("div");
+const formb = document.getElementById("zadatak-forma");
+
+botun.addEventListener("click", () => {
+  console.log("kliknuto na botun");
+  stopPropagation();
+});
+
+div.addEventListener("click", () => { 
+  console.log("kliknuto na div");
+}); 
+
+formb.addEventListener("click", () => { 
+  console.log("kliknuto na formu");
+});
