@@ -83,9 +83,27 @@ const dohvatiStorage = () => {
 // Funkcija za brisanje pojedinačnog zadatka
 const obrisiZadatak = (e) => {
   if (e.target.classList.contains("fa-xmark")) {
-    e.target.parentElement.parentElement.remove();
-    provjeriListu();
+    zadatakZaBrisanje(e.target.parentElement.parentElement);
   }
+};
+
+// Funkcija koja prosljeđuje selektirani element za brisanje iz DOM-a i LS-a
+const zadatakZaBrisanje = (zadatak) => {
+  zadatak.remove();
+  obrisiIzLS(zadatak.textContent);
+  provjeriListu();
+};
+
+// Funkcija za brisanje iz LS-a
+const obrisiIzLS = (x) => {
+  // povući ćemo cijelu listu zadataka iz storagea i spremiti u varijablu zadaciSpremiste
+  let zadaciSpremiste = dohvatiStorage();
+
+  // s obzirom da je to lista zadataka, sa fiter metodom ćemo isfiltrirati kliknutog i vratit sve ostale
+  zadaciSpremiste = zadaciSpremiste.filter((y) => y !== x);
+
+  // updateanu listu vraćamo nazad u localStorage
+  localStorage.setItem("kljuc", JSON.stringify(zadaciSpremiste));
 };
 
 // Funkcija za brisanje svih zadataka
@@ -93,6 +111,9 @@ const obrisiZadatke = () => {
   while (listaZadataka.firstChild) {
     listaZadataka.removeChild(listaZadataka.firstChild);
   }
+
+  // brisanje svega iz LS-a
+  localStorage.removeItem("kljuc");
 
   provjeriListu();
 };
