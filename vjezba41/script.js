@@ -63,3 +63,21 @@ try {
 } catch (error) {
   console.log(error);
 }
+
+/* Ajmo ovaj pristup iskombinirati Async/Await metodom. */
+
+const url = "https://jsonplaceholder.typicode.com/users";
+
+const useri = async () => {
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data);
+    let names = data.map((user) => user.name);
+    console.log(names);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+useri();
