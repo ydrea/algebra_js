@@ -1,61 +1,36 @@
-import React, { Component } from "react";
+import ListaKartica from "./components/ListaKartica";
+import SearchPolje from "./components/SearchPolje";
+import { useState, useEffect } from "react";
 
-export default class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      osobe: [],
-      searchField: "",
-    };
-  }
+const App = () => {
+  const [searchField, setSearchField] = useState("");
+  const [osobe, setOsobe] = useState([]);
+  const [filter, setFilter] = useState(osobe);
 
-  componentDidMount() {
-    fetch("https://reqres.in/api/users")
+  useEffect(() => {
+    fetch("https://reqres.in/api/users/")
       .then((res) => res.json())
-      .then((userData) => this.setState({ osobe: userData.data }));
-  }
+      .then((userData) => setOsobe(userData.data));
+  }, []);
 
-  onFilterChange = (event) => {
-    const searchField = event.target.value.toLowerCase();
-    this.setState(() => {
-      return { searchField };
-    });
-  };
-
-  render() {
-    const { osobe, searchField } = this.state;
-    const { onFilterChange } = this;
-
-    const filter = osobe.filter((osoba) => {
+  useEffect(() => {
+    const filterOsobe = osobe.filter((osoba) => {
       return osoba.first_name.toLowerCase().includes(searchField);
     });
+    setFilter(filterOsobe);
+  }, [osobe, searchField]);
 
-    return (
-      <div>
-        <input type="search" placeholder="Pretraži" onChange={onFilterChange} />
-        {filter.map((osoba) => {
-          return <p key={Math.random()}>{osoba.first_name}</p>;
-        })}
+  const onFilterChange = (event) => {
+    const searchFieldString = event.target.value.toLowerCase();
+    setSearchField(searchFieldString);
+  };
 
-        {/*
-        
-        // osiguravanje ispravnog ispisa clg- pomoću callback funkcije unutar setter funkcije
+  return (
+    <div className="app">
+      <SearchPolje onFilterChange={onFilterChange} />
+      <ListaKartica osobe={filter} />
+    </div>
+  );
+};
 
-        <button
-          onClick={() => {
-            this.setState(
-              () => {
-                return { ime: "Jura" };
-              },
-              () => {
-                console.log(this.state);
-              }
-            );
-          }}
-        >
-          Promijeni ime
-        </button> */}
-      </div>
-    );
-  }
-}
+export default App;
