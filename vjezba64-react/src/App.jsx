@@ -1,19 +1,31 @@
-import { useState } from "react";
 import Header from "./components/Header";
 import ListaKartica from "./components/ListaKartica";
-import karticaData from "./data/Data";
+import Stats from "./components/Stats";
+import UnosKartica from "./components/UnosKartica";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import About from "./pages/About";
+import { FeedBackProvider } from "./context/Context";
 
 const App = () => {
-  const [kartica, setKartica] = useState(karticaData);
-  const handleDelete = (id) => {
-    console.log("Dolazim iz App.jsx-a", id);
-  };
-
   return (
-    <div>
-      <Header text="NOVI LOGO" />
-      <ListaKartica kartica={kartica} handleDelete={handleDelete} />
-    </div>
+    <FeedBackProvider>
+      <Router>
+        <Header text="NOVI LOGO" />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <UnosKartica />
+                <Stats />
+                <ListaKartica />
+              </>
+            }
+          />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </Router>
+    </FeedBackProvider>
   );
 };
 
