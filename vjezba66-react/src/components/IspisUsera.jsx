@@ -1,30 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import GithubContext from "../context/GithubContext";
+import Spinner from "../shared/Spinner";
+import UserKartica from "./UserKartica";
 
 const IspisUsera = () => {
-  const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const fetchUser = async () => {
-    const res = await fetch("https://api.github.com/users");
-    const data = await res.json();
-    setUsers(data);
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  const { users, isLoading } = useContext(GithubContext);
 
   if (!isLoading) {
     return (
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {users.map((user) => (
-          <p className="text-center">{user.login}</p>
+          <UserKartica key={user.id} user={user} />
         ))}
       </div>
     );
   } else {
-    return <p>LOADING...</p>;
+    return <Spinner />;
   }
 };
 

@@ -1,6 +1,12 @@
 import IspisUsera from "../components/IspisUsera";
+import UserSearch from "../components/UserSearch";
 
 const Home = () => {
-  return <IspisUsera />;
+  return (
+    <>
+      <UserSearch />
+      <IspisUsera />
+    </>
+  );
 };
 export default Home;
