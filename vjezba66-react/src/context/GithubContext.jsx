@@ -61,6 +61,7 @@ export const GithubProvider = ({ children }) => {
         fetchUsers,
         clearUsers,
         getUser,
+        getRepos,
         users: state.users,
         user: state.user,
         repos: state.repos,
