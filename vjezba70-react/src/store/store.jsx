@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from "mobx";
+import { action, makeObservable, observable, runInAction } from "mobx";
 
 class UserStore {
   userInfo = [
@@ -13,14 +13,26 @@ class UserStore {
       hobiji: ["nogomet", "rukomet"],
     },
   ];
+  editedUserId = null;
+  newName = "";
+  newHobi = "";
 
   constructor() {
     makeObservable(this, {
       userInfo: observable,
+      editedUserId: observable,
+      newName: observable,
+      newHobi: observable,
       updateUser: action,
       addHobi: action,
+      setEditedUserId: action,
+      stopEditing: action,
     });
   }
+
+  runInAction = (fn) => {
+    return runInAction(fn);
+  };
 
   updateUser = (userId, newName) => {
     const userToUpdate = this.userInfo.find((user) => user.id === userId);
@@ -35,6 +47,16 @@ class UserStore {
       userToUpdate.hobiji = [];
       userToUpdate.hobiji.push(...newHobi);
     }
+  };
+
+  setEditedUserId = (userId) => {
+    this.editedUserId = userId;
+  };
+
+  stopEditing = () => {
+    this.editedUserId = null;
+    this.newName = "";
+    this.newHobi = "";
   };
 }
 
