@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import emailjs from "@emailjs/browser";
 
 const App = () => {
   const initalState = { user: "", email: "", pass: "" };
   const [formValues, setFormValues] = useState(initalState);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+  const form = useRef();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,6 +18,28 @@ const App = () => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSubmit(true);
+
+    if (Object.keys(validate(formValues)).length === 0) {
+      emailjs
+        .sendForm("service_ryc3x6k", "template_4aedxey", form.current, {
+          publicKey: "WEmu56w5cCsRuO63q",
+        })
+        .then(
+          () => {
+            console.log("SUCCESS!");
+            handleFormReset();
+          },
+          (error) => {
+            console.log("FAILED...", error.text);
+          }
+        );
+    }
+  };
+
+  const handleFormReset = () => {
+    setFormErrors({});
+    setFormValues(initalState);
+    setIsSubmit(false);
   };
 
   const validate = (v) => {
@@ -38,7 +63,12 @@ const App = () => {
 
   return (
     <div className="container">
-      <form onSubmit={handleSubmit}>
+      {Object.keys(formErrors).length === 0 && isSubmit ? (
+        <p className="title">Uspjeh</p>
+      ) : (
+        <p className="title">Ispunite formu</p>
+      )}
+      <form onSubmit={handleSubmit} ref={form}>
         <h1>Login forma</h1>
         <hr />
         <div className="form">
